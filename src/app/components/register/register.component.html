@@ -1,0 +1,22 @@
+<div class="container-centered card">
+  <div class="card-header">
+    Register
+  </div>
+  <form class="card-body" (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-group">
+      <label for="email">
+        Email
+      </label>
+      <input type="text" id="email" name="email" class="form-control" ngModel required #email="ngModel">
+      <div class="alert alert-danger" *ngIf="!email.pristine && !email.valid">Need an email</div>
+    </div>
+    <div>
+      <label for="password">
+        Password
+      </label>
+      <input type="text" id="password" name="password" class="form-control" ngModel required #pwd="ngModel">
+      <div class="alert alert-danger" [hidden]="pwd.valid || pwd.pristine">Need a password</div>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="f.invalid">Sign up</button>
+  </form>
+</div>
