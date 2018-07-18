@@ -1,0 +1,22 @@
+<div class="container-centered card">
+  <div class="card-header">
+    New Project
+  </div>
+  <form class="card-body" (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-group">
+      <label for="name">
+        Name
+      </label>
+      <input type="text" id="name" name="name" class="form-control" ngModel required #name="ngModel">
+      <div class="alert alert-danger" *ngIf="!name.pristine && !name.valid">Need a name</div>
+    </div>
+    <div>
+      <label for="description">
+        Description
+      </label>
+      <textarea id="description" name="description" class="form-control" ngModel required #description="ngModel" rows="3"></textarea>
+      <div class="alert alert-danger" [hidden]="description.valid || description.pristine">Need a description</div>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="f.invalid">Check in</button>
+  </form>
+</div>
