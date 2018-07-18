@@ -11,13 +11,13 @@ export class ProjectService {
   constructor(private apiCallService: APICallService) {
   }
 
-  async getProjects(): Promise<Observable<Project[]>> {
-    return (await this.apiCallService.getWithToken('projects'));
+  async getProjects(): Promise<Project[]> {
+    const obs = await this.apiCallService.getWithToken('projects');
+    return obs.toPromise();
   }
 
   async init() {
-    const obs = await this.getProjects();
-    this.projects = await obs.toPromise();
+    this.projects = await this.getProjects();
   }
 
   async create(project) {
