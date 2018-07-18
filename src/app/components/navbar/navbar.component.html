@@ -5,12 +5,12 @@
 
   <div class="collapse navbar-collapse" id="navbar">
     <a href="/" class="navbar-brand mr-auto">Home</a>
-    <div *ngIf="apiCallService.isLogged()">
+    <div *ngIf="!isLogged">
       <a href="/login" class="navbar-brand">Login</a>
       <a href="/register" class="navbar-brand">Register</a>
     </div>
-    <div *ngIf="!apiCallService.isLogged()">
-      <a href="" class="navbar-brand" (click)="apiCallService.logout()">Logout</a>
+    <div *ngIf="isLogged">
+      <a href="#" class="navbar-brand" (click)="logout()">Logout</a>
     </div>
   </div>
 </nav>

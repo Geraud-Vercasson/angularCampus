@@ -1,3 +1,25 @@
-<p>
-  projects works!
-</p>
+<table class="table">
+  <thead>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Created at</th>
+    <th>Updated at</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let project of service.projects">
+      <td>
+        <a routerLink="/project/{{project['id']}}">
+        {{project['name']}}
+        </a>
+      </td>
+      <td>{{project['description']}}</td>
+      <td>{{project['createdAt'] | date: 'medium'}}</td>
+      <td>{{project['updatedAt'] | date: 'medium'}}</td>
+      <td><button class="btn btn-light" (click)="delete(project['id'])">X</button></td>
+    </tr>
+  </tbody>
+</table>
+<a href="/project/create" class="btn btn-primary">
+  New Project
+</a>
+<button class="btn btn-danger" (click)="test()">Test</button>

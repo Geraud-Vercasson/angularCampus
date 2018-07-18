@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {LocalStorage} from '@ngx-pwa/local-storage';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class APICallService {
+  static TOKEN_KEY = 'token';
+  static endPointUrl = 'https://daily-standup-campus.herokuapp.com/api/';
+
   private httpOptions: {
     headers?: HttpHeaders
   } = {};
-  private endPointUrl = 'https://daily-standup-campus.herokuapp.com/api/';
-
   constructor(private httpClient: HttpClient,
-              protected localStorage: LocalStorage) { }
+              protected localStorage: LocalStorage) {}
 
   makeCreateUserHeader() {
     this.httpOptions.headers = new HttpHeaders({
@@ -28,7 +30,8 @@ export class APICallService {
       'Authorization': 'Basic ' + encodedString
     });
   }
-  makeTokenAuthHeader(token: string) {
+  async makeTokenAuthHeader() {
+    const token = await this.localStorage.getItem('token').toPromise();
     this.httpOptions.headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token,
     });
@@ -36,7 +39,7 @@ export class APICallService {
 
   createUser(email: string, pass: string) {
     this.makeCreateUserHeader();
-    const url = this.endPointUrl + 'users';
+    const url = APICallService.endPointUrl + 'users';
     const params = {
       email: email,
       password: pass,
@@ -54,20 +57,45 @@ export class APICallService {
   }
 
   login(email: string, pass: string) {
-    console.log('yo');
     this.makeBasicAuthHeader(email, pass);
-    const url = this.endPointUrl + 'auth';
+    const url = APICallService.endPointUrl + 'auth';
     return this.post(url).toPromise();
   }
 
-  async isLogged(): Promise<boolean> {
+  async logout() {
+    await this.localStorage.clear().toPromise();
+    console.log('cleared');
+    this.httpOptions = {};
+  }
+
+  async postWithToken(urlWithoutEndpoint: string, params?: Object): Promise<any> {
+    const url = APICallService.endPointUrl + urlWithoutEndpoint;
+    await this.makeTokenAuthHeader();
+    return this.post(url, params);
+  }
+
+  async getWithToken(urlWithoutEndpoint: string): Promise<any> {
+    try {
+      const url = APICallService.endPointUrl + urlWithoutEndpoint;
+      await this.makeTokenAuthHeader();
+      return this.httpClient.get(url, this.httpOptions);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async isLogged() {
     const token = await this.localStorage.getItem('token').toPromise();
     return token !== null;
   }
 
-  logout() {
-
+  async delete(urlWithoutEndPoint) {
+    try {
+      const url = APICallService.endPointUrl + urlWithoutEndPoint;
+      await this.makeTokenAuthHeader();
+      return this.httpClient.delete(url, this.httpOptions);
+    } catch (e) {
+      console.log(e);
+    }
   }
-
-
 }
