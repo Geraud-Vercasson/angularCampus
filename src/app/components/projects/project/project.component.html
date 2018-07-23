@@ -1,38 +1,47 @@
 <table class="table">
   <tr>
     <th>Id</th>
-    <td>{{project.id}}</td>
+    <td colspan="2">{{project.id}}</td>
   </tr>
    <tr>
     <th>Name</th>
-    <td>{{project.name}}</td>
+    <td colspan="2">{{project.name}}</td>
   </tr>
    <tr>
     <th>Description</th>
-    <td>{{project.description}}</td>
+    <td colspan="2">{{project.description}}</td>
   </tr>
-   <tr>
+  <tr>
     <th>Creator</th>
-     <table class="table">
-        <tr>
-          <th>Id</th>
-          <td>{{project.creator.id}}</td>
-        </tr>
-        <tr>
-          <th>Name</th>
-          <td>{{project.creator.name}}</td>
-        </tr>
-        <tr>
-          <th>Role</th>
-          <td>{{project.creator.role}}</td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <img src="{{project.creator.picture}}" alt="" />
-          </td>
-        </tr>
+    <td colspan="2">
+      <div>
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#userCollapse">
+          {{project.creator.name}}
+        </button>
+        <div id="userCollapse" class="collapse">
+         <table class="table">
+            <tr>
+              <th>Id</th>
+              <td>{{project.creator.id}}</td>
+            </tr>
+            <tr>
+              <th>Role</th>
+              <td>{{project.creator.role}}</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <img src="{{project.creator.picture}}" alt="" />
+              </td>
+            </tr>
 
-     </table>
+         </table>
+
+        </div>
+      </div>
+   </td>
   </tr>
 
 </table>
+<a href="/project/{{project.id}}/report/create" class="btn btn-primary">
+  New Report
+</a>

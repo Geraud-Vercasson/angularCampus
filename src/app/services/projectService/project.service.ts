@@ -21,7 +21,7 @@ export class ProjectService {
   }
 
   async create(project) {
-    const url = '/projects';
+    const url = 'projects';
     return await this.apiCallService.postWithToken(url, project);
   }
 

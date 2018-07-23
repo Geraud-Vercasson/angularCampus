@@ -10,12 +10,13 @@ import {Project} from '../class/project';
 })
 export class ProjectComponent implements OnInit {
 
-  project = new Project();
+  project: Project;
 
   constructor(private route: ActivatedRoute,
               private service: ProjectService) { }
 
   ngOnInit() {
+    this.project = new Project();
     this.project.creator = {id: '',
     name: '',
     picture: '',

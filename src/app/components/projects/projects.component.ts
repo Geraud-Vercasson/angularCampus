@@ -15,11 +15,6 @@ export class ProjectsComponent implements OnInit {
     this.service.init();
   }
 
-  async test() {
-    const id = '5b4f0d5e870f220014223240';
-    console.log(await this.service.getProject(id));
-  }
-
   async delete(id) {
     try {
       await this.service.delete(id);

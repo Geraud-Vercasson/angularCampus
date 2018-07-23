@@ -11,6 +11,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectComponent } from './components/projects/project/project.component';
 import { CreateProjectComponent } from './components/projects/create-project/create-project.component';
+import { CreateReportComponent } from './components/reports/create-report/create-report.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CreateProjectComponent } from './components/projects/create-project/cre
     ProjectsComponent,
     ProjectComponent,
     CreateProjectComponent,
+    CreateReportComponent,
   ],
   imports: [
     BrowserModule,
